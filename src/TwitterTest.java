@@ -43,10 +43,10 @@ public class TwitterTest {
         submit.click();                                                         //Click & wait a bit
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
     }
-/*
+
     @Test
     public void updateBio() {                                                   //Update the bio of a user
-        String biouptext = "Bio message update";                                //The Bio update text
+        String biouptext = "Software Engineering";                              //The Bio update text
         login();
         driver.get(mainpage+user);                                              //Go to the profile & wait a bit
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
@@ -103,10 +103,10 @@ public class TwitterTest {
             System.out.println("Search failed");
         }
     }
-*/
+
     @Test
     public void postTweet() {                                                   //Post a tweet
-        String tweet = "Testing selendroid while watching @vikings";
+        String tweet = "Hopefully my last test tweet";
         login();
         WebElement tweetButton = driver.findElement(By.className("_132qLRA5")); //Find tweet button
         tweetButton.click();                                                    //Click and wait a bit
@@ -124,30 +124,19 @@ public class TwitterTest {
                         .findFirst().get();
         tweetBut.click();                                                       //Click and wait a bit
        try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-    /*WebElement firstTweetRow =
-                driver.findElements(By.tagName("div"))
-                .stream()
-                .filter(b -> "tweet".equals(b.getAttribute("data-testid")))
-                .findFirst().get();
-        System.out.println("Found firstTweetRow");
-        WebElement firstTweet = firstTweetRow.findElement(By.className("_2gpfhfZk"));
-        System.out.println("Found firstTweet");
-        WebElement div1 = firstTweet.findElements(By.tagName("div")).
-                stream().
-                findFirst().
-                get();
-        System.out.println("Found div1");
-        String res = div1.findElement(By.tagName("span")).findElement(By.tagName("h1")).getText();
-        System.out.println("Found res: "+res);*/
-        String res = driver.findElement(By.className("Fe7u13Lt")).getText();        //Shadow - test needed
-        if (res.equals("Your Tweet was posted!")){
-            System.out.println("Successful tweet.");
-        }
-        else {
-            System.out.println("Tweet post failed");
-        }
+       try {
+           WebElement tweetElement =
+                   driver.findElements(By.tagName("span"))
+                           .stream()
+                           .filter(b -> tweet.equals(b.getText()))
+                           .findFirst().get();
+           System.out.println("Successful tweet.");
+       }
+       catch (NoSuchElementException nsee) {
+           System.out.println("Tweet post failed");
+       }
     }
-/*
+
     @Test
     public void followUser() {                                                      //Follow a user
         login();
@@ -175,7 +164,7 @@ public class TwitterTest {
     }
 
     @Test
-    public void signupWithWrongPhoneNumber() {                                  //Signup with wrong phone number test
+    public void signupWithInvalidPhoneNumber() {                                //Signup with invalid phone number test
         String name = "BillyGrande";
         String phone= "123456";
         String correct_hint = "Please enter a valid phone number.";
@@ -204,7 +193,7 @@ public class TwitterTest {
             System.out.println("Unsuccessful hint");
         }
     }
-*/
+
     @Before
     public void startSelendroidServer() throws Exception {
         if (selendroidServer != null) {
