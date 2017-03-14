@@ -19,113 +19,112 @@ import java.awt.*;
 public class TwitterTest {
     private SelendroidLauncher selendroidServer = null;
     private WebDriver driver = null;
+    //Change user and password for specific users
+    private String user = "BillyManavis";
+    private String password = "123456YouAreABitch";
+    private String loginpage = "https://mobile.twitter.com/login";
+    private String signuppage = "http://mobile.twitter.com/signup";
+    private String mainpage = "https://mobile.twitter.com/";
 
-    public void login(){
-        driver.get("https://mobile.twitter.com/login");
+    public void login(){                                                        //Login method. NOT A TEST
+        driver.get(loginpage);
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-        WebElement userName =
+        WebElement userName =                                                   //Find user name text box
                 driver.findElement(By.name("session[username_or_email]"));
-        userName.sendKeys("BillyManavis");
-        WebElement passwd =
+        userName.sendKeys(user);                                                //Type the user
+        WebElement passwd =                                                     //Find password text box
                 driver.findElement(By.name("session[password]"));
-        passwd.sendKeys("123456YouAreABitch");
-        WebElement submit =
+        passwd.sendKeys(password);                                              //Type the password
+        WebElement submit =                                                     //Find the login button
                 driver.findElements(By.tagName("button"))
                         .stream()
                         .filter(b -> "Log in".equals(b.getAttribute("value")))
                         .findFirst().get();
-        submit.click();
+        submit.click();                                                         //Click & wait a bit
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
     }
 /*
     @Test
-    public void updateBio() {
+    public void updateBio() {                                                   //Update the bio of a user
+        String biouptext = "Bio message update";                                //The Bio update text
         login();
-        driver.get("http://mobile.twitter.com/BillyManavis");       //System.out.println("Loaded profile");
+        driver.get(mainpage+user);                                              //Go to the profile & wait a bit
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-        WebElement editProfile =
-                driver.findElement(By.className("MmJh82_T"));       //System.out.println("Found edit profile button");
-        editProfile.click();            //System.out.println("Clicked edit profile button");
+        WebElement editProfile = driver.findElement(By.className("MmJh82_T"));  //Find edit profile button
+        editProfile.click();                                                    //Click it
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-        WebElement bioTextArea =
+        WebElement bioTextArea =                                                //Find bio text box
                 driver.findElements(By.tagName("textarea"))
                         .stream()
                         .filter(b -> "More about you".equals(b.getAttribute("placeholder")))
-                        .findFirst().get();         //System.out.println("Found text area");
-        bioTextArea.clear();
-        bioTextArea.sendKeys("Grande bitches!!");   //System.out.println("Sent new bio");
-        WebElement saveButton =
-                driver.findElement(By.className("SpbPGaHr"));
-        saveButton.click();
+                        .findFirst().get();
+        bioTextArea.clear();                                                    //Clear previous bio
+        bioTextArea.sendKeys(biouptext);                                        //Send new bio
+        WebElement saveButton = driver.findElement(By.className("SpbPGaHr"));   //Find save button
+        saveButton.click();                                                     //Click & wait a bit
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-        WebElement bio =
-                driver.findElement(By.className("EcSZ4Fq3"));
-        String sbio = bio.getText();
-        if (sbio.equals("Grande bitches!!"))
+        WebElement bio = driver.findElement(By.className("EcSZ4Fq3"));          //Find bio element
+        String sbio = bio.getText();                                            //Get the text of bio
+        if (sbio.equals(biouptext))                                             //Perform equality check
             System.out.println("Bio has been successfully updated.");
         else
             System.out.println("Bio did not update successfully.");
     }
 
     @Test
-    public void search() {
+    public void search() {                                                      //Search for a keyword
         String keyword = "Tesla";
         login();
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-        WebElement searchArea =
+        WebElement searchArea =                                                 //Find search area
                 driver.findElements(By.tagName("a"))
                         .stream()
                         .filter(b -> "Search".equals(b.getAttribute("aria-label")))
                         .findFirst().get();
-        System.out.println("Found search area");
-        searchArea.click();
+        searchArea.click();                                                     //Click and wait a bit
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-        WebElement searchBox =
+        WebElement searchBox =                                                  //Find search box
                 driver.findElements(By.tagName("input"))
                         .stream()
                         .filter(b -> "Search Twitter".equals(b.getAttribute("placeholder")))
                         .findFirst().get();
-        searchBox.sendKeys(keyword);
-        System.out.println("Sent keyword");
-        searchBox.click();
+        searchBox.sendKeys(keyword);                                            //Type the keyword
+        searchBox.click();                                                      //Click and wait a bit
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-        String result =
+        String result =                                                         //Get the text of the search box
                 driver.findElements(By.tagName("input"))
                         .stream()
                         .filter(b -> "Search Twitter".equals(b.getAttribute("placeholder")))
                         .findFirst().get().getAttribute("value");
-        System.out.println("Found result");
-        if (keyword.equals(result)){
+        if (keyword.equals(result)){                                            //Perform equality check
             System.out.println("Successful search.");
         }
         else {
             System.out.println("Search failed");
         }
     }
-
+*/
     @Test
-    public void writetweet() {
-        String tweet = "Testing selendroid with my team ;) Test 2";
+    public void postTweet() {                                                   //Post a tweet
+        String tweet = "Testing selendroid while watching @vikings";
         login();
-        WebElement tweetButton = driver.findElement(By.className("_132qLRA5"));
-        tweetButton.click();
+        WebElement tweetButton = driver.findElement(By.className("_132qLRA5")); //Find tweet button
+        tweetButton.click();                                                    //Click and wait a bit
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-        WebElement searchArea =
+        WebElement tweetArea =                                                  //Find Tweet area
                 driver.findElements(By.tagName("textarea"))
                         .stream()
                         .filter(b -> "What's happening?".equals(b.getAttribute("placeholder")))
                         .findFirst().get();
-        System.out.println("Found search area");
-        searchArea.sendKeys(tweet);
-        WebElement tweetBut =
+        tweetArea.sendKeys(tweet);                                              //Type the tweet
+        WebElement tweetBut =                                                   //Find the new tweet button
                 driver.findElements(By.tagName("button"))
                         .stream()
                         .filter(b -> "tweet-button".equals(b.getAttribute("data-testid")))
                         .findFirst().get();
-        tweetBut.click();
-        System.out.println("Clicked tweet button");
-        try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }*/
-        /*WebElement firstTweetRow =
+        tweetBut.click();                                                       //Click and wait a bit
+       try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
+    /*WebElement firstTweetRow =
                 driver.findElements(By.tagName("div"))
                 .stream()
                 .filter(b -> "tweet".equals(b.getAttribute("data-testid")))
@@ -140,74 +139,72 @@ public class TwitterTest {
         System.out.println("Found div1");
         String res = div1.findElement(By.tagName("span")).findElement(By.tagName("h1")).getText();
         System.out.println("Found res: "+res);*/
-     /*   String res = driver.findElement(By.className("Fe7u13Lt")).getText();
+        String res = driver.findElement(By.className("Fe7u13Lt")).getText();        //Shadow - test needed
         if (res.equals("Your Tweet was posted!")){
             System.out.println("Successful tweet.");
         }
         else {
             System.out.println("Tweet post failed");
         }
-    }*/
-
-    /*@Test
-    public void followUser() {
+    }
+/*
+    @Test
+    public void followUser() {                                                      //Follow a user
         login();
         String userid = "elonmusk";
-        driver.get("http://mobile.twitter.com/"+userid);       //System.out.println("Loaded profile");
+        driver.get(mainpage+userid);                                                //Profile page of the user
         try { Thread.sleep(4000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-        System.out.println("Loaded website");
-        WebElement followButton =
+        WebElement followButton =                                                   //Find follow button
                 driver.findElements(By.tagName("button"))
                         .stream()
                         .filter(b -> "44196397-follow".equals(b.getAttribute("data-testid")))
                         .findFirst().get();
-        System.out.println("Found follow area");
-        followButton.click();
+        followButton.click();                                                       //Click the button and wait
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-        try {
+        try {                                          //Try to find the unfollow button that should have been created
             WebElement unfollowButton =
                     driver.findElements(By.tagName("button"))
                             .stream()
                             .filter(b -> "44196397-unfollow".equals(b.getAttribute("data-testid")))
                             .findFirst().get();
-            System.out.println("Following was successful");
+            System.out.println("Following was successful");                         //No exception = successful following
         }
         catch (NoSuchElementException nee) {
             System.out.println("Following was unsuccessful");
         }
-    }*/
+    }
 
     @Test
-    public void signup() {
+    public void signupWithWrongPhoneNumber() {                                  //Signup with wrong phone number test
         String name = "BillyGrande";
         String phone= "123456";
-        driver.get("http://mobile.twitter.com/signup");
+        String correct_hint = "Please enter a valid phone number.";
+        driver.get(signuppage);                                                 //Get to signup page
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-        System.out.println("Loaded website");
-        WebElement nameTextArea = driver.findElement(By.id("oauth_signup_client_fullname"));
-        nameTextArea.sendKeys(name);
-        WebElement phoneTextArea = driver.findElement(By.id("oauth_signup_client_phone_number"));
-        phoneTextArea.sendKeys(phone);
-        WebElement signupButton =
+        WebElement nameTextArea = driver.findElement(By.id("oauth_signup_client_fullname"));      //Find name text area
+        nameTextArea.sendKeys(name);                                            //Type the name
+        WebElement phoneTextArea = driver.findElement(By.id("oauth_signup_client_phone_number")); //Find phone text area
+        phoneTextArea.sendKeys(phone);                                          //Type the phone
+        WebElement signupButton =                                               //Find signup button
                 driver.findElements(By.tagName("input"))
                         .stream()
                         .filter(b -> "Sign up".equals(b.getAttribute("value")))
                         .findFirst().get();
-        signupButton.click();
+        signupButton.click();                                                   //Click and wait a bit
         try { Thread.sleep(2000); } catch(InterruptedException ie) { Toolkit.getDefaultToolkit().beep(); }
-        String hint =
+        String hint =                                                           //Find the hint about the wrong number
                 driver.findElements(By.tagName("div"))
                         .stream()
                         .filter(b -> "hint".equals(b.getAttribute("class")))
                         .findFirst().get().getText();
-        if (hint.equals("Please enter a valid phone number.")){
+        if (hint.equals(correct_hint)){                                         //Perform equality check
             System.out.println("Successful hint.");
         }
         else {
             System.out.println("Unsuccessful hint");
         }
     }
-
+*/
     @Before
     public void startSelendroidServer() throws Exception {
         if (selendroidServer != null) {
